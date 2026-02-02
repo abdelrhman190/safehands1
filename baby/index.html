@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="site_title">الأيدي الآمنة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo">
+      <img src="/images-1-removebg-preview.png" alt="Safe Hands Icon">
+      <span data-i18n="site_title">الأيدي الآمنة</span>
+    </div>
+    <div class="language-selector">
+      <select id="languageSelect" onchange="changeLanguage()">
+        <option value="ar">🇪🇬 عربي</option>
+        <option value="en">🇺🇸 English</option>
+      </select>
+    </div>
+    <div class="menu-toggle">
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle">☰</label>
+      <ul>
+        <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+        <li><a href="/services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+        <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+        <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+        <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+        
+        <li id="dashboard-link" style="display: none;">
+        </li>
+        <li id="logout-link" style="display: none;">
+          <a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a>
+        </li>
+        <li id="login-signup-link">
+          <a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a>
+        </li>
+        <span id="user-name-display" class="user-name-display">
+          <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
+                            <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </a>
+        </span>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="babysitters-page">
+  <div class="controls">
+    <select id="filterExperience" onchange="filterBabysitters()">
+      <option value="all" data-i18n="filter_all">الكل</option>
+      <option value="0-2" data-i18n="filter_0_2">0-2 سنوات</option>
+      <option value="3-5" data-i18n="filter_3_5">3-5 سنوات</option>
+      <option value="6+" data-i18n="filter_6_plus">6+ سنوات</option>
+    </select>
+  </div>
+  <div class="babysitters-list" id="babysitters-list"></div>
+</section>
+
+<footer>
+  <p data-i18n="footer_copyright">© 2025 الأيدي الآمنة. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

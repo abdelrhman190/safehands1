@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">إنشاء حجز - SafeHands</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="/images-1-removebg-preview.png" alt="Safe Hands Icon" onerror="this.style.display='none';"><span data-i18n="site_title">SafeHands</span></div>
+            <div class="language-selector"><select id="languageSelect" onchange="changeLanguage()"><option value="ar">🇪🇬 عربي</option><option value="en">🇺🇸 English</option></select></div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/booking/book.html" class="nav-link" data-i18n="nav_book_now">الحجز</a></li>
+                    <li id="dashboard-link" style="display: none;">
+                        <a href="/my_pro/profile.html" class="nav-link" data-i18n="nav_profile">الملف الشخصي</a>
+                    </li>
+                    <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
+                    <li id="login-signup-link"><a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
+                            <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </a>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <section class="booking-page">
+        <div class="booking-form">
+            <h2 data-i18n="form_title">إنشاء حجز جديد</h2>
+            <div id="alertMessage" class="alert" data-i18n="alert_message"></div>
+            <div class="form-group">
+                <label for="user-email" data-i18n="label_email"><i class="fas fa-envelope"></i> بريدك الإلكتروني</label>
+                <input type="email" id="user-email" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="babysitter" data-i18n="label_babysitter"><i class="fas fa-user"></i> اختر جليسة الأطفال</label>
+                <select id="babysitter" required onchange="calculatePrice()">
+                    <option value="" data-i18n="select_babysitter">اختر جليسة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="booking-date" data-i18n="label_date"><i class="fas fa-calendar-alt"></i> تاريخ ووقت الحجز</label>
+                <input type="datetime-local" id="booking-date" required>
+            </div>
+            <div class="form-group">
+                <label for="duration" data-i18n="label_duration"><i class="fas fa-clock"></i> مدة الحجز (بالساعات)</label>
+                <input type="number" id="duration" min="1" required onchange="calculatePrice()">
+            </div>
+            <div class="form-group">
+                <label for="service" data-i18n="label_service"><i class="fas fa-concierge-bell"></i> نوع الخدمة</label>
+                <select id="service" required>
+                    <option value="" disabled selected data-i18n="select_service">اختر الخدمة</option>
+                    <option value="eldercare" data-i18n="service_eldercare">رعاية المسنين</option>
+                    <option value="special_needs" data-i18n="service_special_needs">رعاية ذوي الاحتياجات الخاصة</option>
+                    <option value="house_cleaning" data-i18n="service_house_cleaning">تنظيف المنزل</option>
+                    <option value="childcare" data-i18n="service_childcare">رعاية أطفال</option>
+                    <option value="child_education" data-i18n="service_education">تعليم أطفال</option>
+                    <option value="nightcare" data-i18n="service_nightcare">رعاية ليلية</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label data-i18n="label_total_price"><i class="fas fa-money-bill-wave"></i> السعر الإجمالي</label>
+                <input type="text" id="total-price" readonly>
+            </div>
+            <div class="form-group">
+                <label for="payment-method" data-i18n="label_payment_method"><i class="fas fa-credit-card"></i> طريقة الدفع</label>
+                <select id="payment-method" required>
+                    <option value="" data-i18n="select_payment">اختر طريقة دفع</option>
+                    <option value="credit_card" data-i18n="payment_credit_card">بطاقة ائتمان</option>
+                    <option value="wallet" data-i18n="payment_wallet">محفظة إلكترونية</option>
+                    <option value="cash_on_delivery" data-i18n="payment_cash">دفع عند الاستلام</option>
+                </select>
+            </div>
+            <button class="btn" onclick="showConfirmation(event)" data-i18n="btn_book">حجز</button>
+        </div>
+    </section>
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="modal-content">
+            <h3 data-i18n="modal_title">تأكيد الحجز</h3>
+            <p id="confirmationDetails"></p>
+            <button class="modal-btn confirm" onclick="createBooking(event)" data-i18n="modal_confirm">تأكيد</button>
+            <button class="modal-btn cancel" onclick="hideConfirmation()" data-i18n="modal_cancel">إلغاء</button>
+        </div>
+    </div>
+    <footer>
+        <p data-i18n="footer_copyright">© 2025 SafeHands. جميع الحقوق محفوظة.</p>
+    </footer>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">Safe Hands - About</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo" class="logo">
+                <img src="images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">🇪🇬 العربية</option>
+                    <option value="en">🇺🇸 English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+                    <li><a href="/my_pro/profile.html" id="profile-link" class="nav-link" data-i18n="nav_profile" style="display: none;">الملف الشخصي</a></li>
+                    <li><a href="#" id="logout-link" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout" style="display: none;">تسجيل الخروج</a></li>
+                    <li><a href="/log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                       <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
+                            <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </a>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <br><br><br><br>
+        <section class="vision">
+            <div class="vision-content">
+                <div class="vision-text">
+                    <i class="fas fa-eye"></i>
+                    <h2 data-i18n="vision_title">رؤيتنا</h2>
+                    <p data-i18n="vision_description">في مجتمع يحترم التقاليد، الروابط العائلية، والدعم المجتمعي، نسعى لسد الفجوة بين احتياجات الرعاية الحديثة والقيم الثقافية المتأصلة في رعاية آبائنا وأجدادنا. سواء كنت ترعى أحد أحبائك في المنزل أو تبحث عن خدمات موثوقة، موقعنا يقدم إرشادات موثوقة، موارد مفيدة، ومعلومات محدثة تتناسب مع أسلوب الحياة المصري.</p>
+                </div>
+                <img src="1.jpg" alt="Vision" class="vision-image">
+            </div>
+        </section>
+
+        <section class="mission">
+            <div class="mission-content">
+                <div class="mission-text">
+                    <i class="fas fa-heart"></i>
+                    <h2 data-i18n="mission_title">مهمتنا</h2>
+                    <p data-i18n="mission_description">ما يميزنا هو التزامنا بالسلامة والثقة. كل مقال، اقتراح، وتوصية خدمة على منصتنا مصممة بأعلى معايير الرعاية والأمان في الاعتبار—لأن راحة البال لك ولأحبائك هي أولويتنا القصوى.</p>
+                </div>
+                <img src="2.jpg" alt="Mission" class="mission-image">
+            </div>
+        </section>
+
+        <section class="our-services">
+            <h2 data-i18n="services_title">خدماتنا</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fas fa-stethoscope"></i>
+                    <p data-i18n="service_medical">الاستشارات الطبية: الوصول إلى متخصصين موثوقين في الرعاية الطبية للمسنين.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-home"></i>
+                    <p data-i18n="service_home_care">خدمات الرعاية المنزلية: توصيات لمقدمي رعاية منزلية موثوقين ومساعدة يومية.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <p data-i18n="service_emotional">الدعم العاطفي والنفسي: نصائح وموارد لدعم الصحة النفسية للمسنين ومقدمي الرعاية على حد سواء.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-book"></i>
+                    <p data-i18n="service_educational">المحتوى التعليمي: مقالات وأدلة عن تغذية المسنين، الحركة، الحالات المزمنة، وأكثر.</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-users"></i>
+                    <p data-i18n="service_community">دعم المجتمع: مساحة آمنة ومحترمة للتواصل مع الآخرين الذين يشاركون نفس رحلة الرعاية.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="cta">
+            <a href="/booking/book.html" class="cta-button" data-i18n="book_now">احجز الآن</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <h3 data-i18n="footer_company_title">Safe Hands</h3>
+                    <p data-i18n="footer_company_description">احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.</p>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_links_title">الروابط</h3>
+                    <ul>
+                        <li><a href="/index.html" data-i18n="nav_home">الرئيسية</a></li>
+                        <li><a href="/about/index.html" data-i18n="nav_about">من نحن</a></li>
+                        <li><a href="/Services/index.html" data-i18n="nav_services">الخدمات</a></li>
+                        <li><a href="/con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                    <ul>
+                        <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+                        <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+                        <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+                    </ul>
+                </div>
+                <div class="Social-Media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

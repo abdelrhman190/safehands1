@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #fff0f3, #f4e4f0, #e6f7f6);
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #fcdcec, #ffb6c1);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.logo img {
+    width: 35px;
+    height: 35px;
+}
+
+.language-selector select {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #fff;
+    color: #555;
+}
+
+.user-name-display {
+    display: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ecf0f1;
+    border-radius: 15px;
+}
+
+.user-name-display i {
+    margin-right: 5px;
+    color: #3498db;
+}
+
+.menu-toggle ul li .user-name-display {
+    display: inline-flex;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: #4a4a4a;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff6b81;
+}
+
+nav .menu-toggle label {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #000;
+}
+
+nav .menu-toggle input[type="checkbox"] {
+    display: none;
+}
+
+nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        background: linear-gradient(135deg, #ffccd5, #e6f7f6);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-toggle label {
+        display: block;
+    }
+
+    .menu-toggle input[type="checkbox"]:checked ~ ul {
+        display: block;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 10px;
+    }
+}
+
+.babysitters-page {
+    padding: 120px 20px 40px;
+    flex: 1;
+}
+
+.controls {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.controls select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ffccd5;
+    font-size: 14px;
+}
+
+.babysitters-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.babysitter-card {
+    background: linear-gradient(135deg, #fff, #ffccd5);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.babysitter-card:hover {
+    transform: translateY(-10px);
+}
+
+.babysitter-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: #98ded9;
+}
+
+.babysitter-card.unavailable::before {
+    background: #ff6b81;
+}
+
+.babysitter-card .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 15px;
+    border: 3px solid #ffccd5;
+    transition: transform 0.3s ease;
+}
+
+.babysitter-card .profile-image:hover {
+    transform: scale(1.1);
+}
+
+.babysitter-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.babysitter-card p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.babysitter-card .booked-dates {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ff6b81;
+}
+
+.babysitter-card.booked-today {
+    border: 2px solid #ff6b81;
+    position: relative;
+}
+
+.babysitter-card.booked-today::after {
+    content: "محجوز اليوم";
+    color: #fff;
+    background: #ff6b81;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.profile-link {
+    display: inline-block;
+    margin-top: 15px;
+    background: linear-gradient(135deg, #ffccd5, #ff8a9b);
+    color: #2c3e50;
+    padding: 8px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.profile-link:hover {
+    background: linear-gradient(135deg, #ff8a9b, #98ded9);
+    transform: translateY(-2px);
+}
+
+footer {
+    background: linear-gradient(135deg, #fcdcec, #ffccd5);
+    padding: 20px;
+    text-align: center;
+    color: #000;
+    margin-top: auto;
+}
+
+footer p {
+    font-size: 14px;
+}

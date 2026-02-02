@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/images-removebg-preview.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <title data-i18n="site_title">Safe Hands - Babysitter Booking</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo" class="logo">
+                <img src="images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+
+                    <li id="profile-link" style="display: none;"></li>
+                    <li><a href="#" id="logout-link" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout" style="display: none;">تسجيل الخروج</a></li>
+                    <li><a href="/log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
+                            <i class="fas fa-user"></i>
+                        <span id="user-name-text"></span>
+                    </a>
+                        
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
+<br><br><br>
+
+    <section id="home" class="hero">
+        
+        <div class="hero-content">
+            <h1 data-i18n="hero_title" class="typewriter">Your peace of mind starts here</h1>
+            <p data-i18n="hero_description">We provide trained and trusted babysitters to keep your children in safe hands.</p>
+            <a href="/baby/index.html"><button data-i18n="hero_button">البحث عن بيبي جليسات</button></a>
+        </div>
+    </section>
+
+<section id="services" class="services">
+    <h2 data-i18n="services_title">خدماتنا | Our Services</h2>
+    <div class="service-cards">
+
+        <!-- الخدمة 1 -->
+        <div class="cards">
+            <img src="/img/pretty-sister-spending-time-with-her-baby-brother-sitting-floor-bedroom-beautiful-young-babysitter-playing-with-little-boy-indoors-holding-stuffed-toy-duck-infancy-childcare-motherhood_344912-7-1.avif" alt="Babysitters">
+            <h3 data-i18n="service1_title">بيبي سيترز موثوقون | Trusted Babysitters</h3>
+            <p data-i18n="service1_description">
+                جميع جليسات الأطفال مدربات وموثوقات، مع فحص خلفية شامل لضمان أمان طفلك وراحتك.<br>
+                <span class="en">All babysitters are trained and background-checked to ensure your child’s safety and your peace of mind.</span>
+            </p>
+        </div>
+
+        <!-- الخدمة 2 -->
+        <div class="cards">
+            <img src="/img/New_Times_New_Services_0562a0c516.jpg" alt="Flexible Scheduling">
+            <h3 data-i18n="service2_title">مواعيد مرنة | Flexible Scheduling</h3>
+            <p data-i18n="service2_description">
+                نوفر خدمة الرعاية بالساعات أو الأيام أو بشكل مستمر لتناسب جدولك.<br>
+                <span class="en">Schedule babysitting hourly, daily, or ongoing — fully tailored to your needs.</span>
+            </p>
+        </div>
+
+        <!-- الخدمة 3 -->
+        <div class="cards">
+            <img src="/img/pexels-yankrukov-8612990.jpg" alt="Activities & Engagement">
+            <h3 data-i18n="service3_title">أنشطة تعليمية وترفيهية | Fun & Learning</h3>
+            <p data-i18n="service3_description">
+                البيبي سيترز يهتمون بالرعاية واللعب والتعليم معًا ليكون طفلك سعيدًا ومشاركًا.<br>
+                <span class="en">Our babysitters engage kids with fun, safe, and educational activities — not just care.</span>
+            </p>
+        </div>
+
+    </div>
+</section>
+<!-- ✅ 1. آراء العملاء -->
+<section id="testimonials" class="testimonials">
+  <h2>آراء العملاء</h2>
+  <div class="testimonial-cards">
+    <div class="card">
+      <!-- <p>"خدمة رائعة! أول مرة أترك أطفالي مع جليسة وكنت مطمئنة جدًا."</p> -->
+      <!-- <h4>- سارة محمد</h4> -->
+    </div>
+    <div class="card">
+      <!-- <p>"الموقع وفر علي وقت كتير، لقيت جليسة ممتازة في دقائق."</p>
+      <h4>- أحمد علي</h4> -->
+    </div>
+    <div class="card">
+      <!-- <p>"جليسة الأطفال كانت لطيفة جدًا ومهتمة بتفاصيل ابني."</p>
+      <h4>- منى حسن</h4> -->
+    </div>
+  </div>
+</section>
+
+<!-- ✅ 2. خطوات الحجز -->
+<section id="how-it-works" class="how-it-works">
+  <h2>خطوات الحجز</h2>
+  <div class="steps">
+    <div class="step">
+      <i class="fa fa-search"></i>
+      <h3>ابحث</h3>
+      <p>ابحث عن جليسة أطفال مناسبة في منطقتك.</p>
+    </div>
+    <div class="step">
+      <i class="fa fa-user-check"></i>
+      <h3>اختر</h3>
+      <p>راجع الملفات الشخصية والتقييمات.</p>
+    </div>
+    <div class="step">
+      <i class="fa fa-calendar-check"></i>
+      <h3>احجز</h3>
+      <p>حدد الموعد المناسب لك بسهولة.</p>
+    </div>
+    <div class="step">
+      <i class="fa fa-smile"></i>
+      <h3>استمتع براحة بالك</h3>
+      <p>جليسة أطفال موثوقة في خدمتك.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ 3. فريقنا -->
+<section id="team" class="team-section">
+        <h2>فريق مقدمي الرعاية</h2>
+        <div id="babysitter-list" class="babysitter-slider">
+            <div class="babysitter-grid"></div>
+        </div>
+    </section>
+<!-- ✅ 4. الأمان والموثوقية -->
+<section id="safety" class="safety">
+  <h2>الأمان والموثوقية</h2>
+  <div class="safety-points">
+    <div class="point">
+      <i class="fa fa-id-card"></i>
+      <h3>فحص الخلفية</h3>
+      <p>جميع الجليسات يخضعن لفحص شامل للهوية والسجل.</p>
+    </div>
+    <div class="point">
+      <i class="fa fa-graduation-cap"></i>
+      <h3>تدريب متخصص</h3>
+      <p>برامج تدريب على الإسعافات الأولية والتعامل مع الأطفال.</p>
+    </div>
+    <div class="point">
+      <i class="fa fa-star"></i>
+      <h3>تقييمات حقيقية</h3>
+      <p>أولياء الأمور يقيّمون الجليسات بعد كل جلسة.</p>
+    </div>
+  </div>
+</section>
+
+    <a href="#home" class="scroll-up"><i class="fa-solid fa-arrow-up"></i></a>
+    <a href="faq/index.html" class="faq" data-i18n="faq_link">FAQ</a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="grid">
+                <div>
+                    <h3 data-i18n="footer_company_title">Safe Hands</h3>
+                    <p data-i18n="footer_company_description">
+                        احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.
+                    </p>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_links_title">الروابط</h3>
+                    <ul>
+                        <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+                        <li><a href="/about/index.html" data-i18n="nav_about">من نحن</a></li>
+                        <li><a href="/Services/index.html" data-i18n="nav_services">الخدمات</a></li>
+                        <li><a href="/con/index.html" data-i18n="nav_contact">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 data-i18n="footer_contact_title">تواصل معنا</h3>
+                    <ul>
+                        <li data-i18n="footer_contact_email">البريد الإلكتروني: Safehands.com</li>
+                        <li data-i18n="footer_contact_phone">رقم الهاتف: 01279581077</li>
+                        <li data-i18n="footer_contact_address">العنوان: 202 شارع باكوس، الإسكندرية، مصر</li>
+                    </ul>
+                </div>
+                <div class="Social-Media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <span data-i18n="footer_copyright">جميع الحقوق محفوظة. 2025 Safe Hands.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة Supabase
+        const supabase = window.supabase.createClient('https://ebzhfytrzcxsnepcudyl.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc');
+// دالة لجلب بيانات البيبي سيترز
+async function fetchBabysitters() {
+    try {
+        const { data, error } = await supabase
+            .from('babysitters')
+            .select('id, name, experience, profile_image');
+        
+        if (error) {
+            console.error('Error fetching babysitters:', error);
+            displayNoDataMessage();
+            return [];
+        }
+
+        if (data && data.length > 0) {
+            console.log('Fetched babysitters:', data);
+            // تحويل روابط الصور
+            return data.map(sitter => ({
+                ...sitter,
+                profile_image: sitter.profile_image || 'https://via.placeholder.com/150'
+            }));
+        } else {
+            console.warn('No babysitters found');
+            displayNoDataMessage();
+            return [];
+        }
+    } catch (err) {
+        console.error('Unexpected error:', err);
+        displayNoDataMessage();
+        return [];
+    }
+}
+
+// دالة لعرض رسالة عند عدم وجود بيانات
+function displayNoDataMessage() {
+    const grid = document.querySelector('.babysitter-grid');
+    if (grid) {
+        grid.innerHTML = `<p class="no-data">${translations[lang].no_data || 'لا يوجد جليسات متاحة حاليًا'}</p>`;
+    }
+}
+
+// دالة لعرض البيبي سيترز
+function displayBabysitters(filtered) {
+    const grid = document.querySelector('.babysitter-grid');
+    if (!grid) {
+        console.error('Babysitter grid not found');
+        return;
+    }
+    grid.innerHTML = ''; // تفريغ القائمة
+
+    if (!filtered || filtered.length === 0) {
+        displayNoDataMessage();
+        return;
+    }
+// تكرار الكروت بناءً على العدد لضمان عدم ظهور فواصل
+        let repeatedData = filtered;
+        if (filtered.length < 5) {
+            // إذا كان عدد الكروت أقل من 5، كررها 4 مرات لملء الشاشة
+            repeatedData = filtered.concat(filtered).concat(filtered).concat(filtered);
+        } else {
+            // إذا كان العدد 5 أو أكثر، كرر مرتين
+            repeatedData = filtered.concat(filtered);
+        }
+
+    // إضافة الكروت مرتين لضمان التمرير المستمر
+    filtered.concat(filtered).forEach(sitter => {
+        const card = document.createElement('article');
+        card.className = 'babysitter-card';
+        card.innerHTML = `
+            <img src="${sitter.profile_image}" alt="${sitter.name}" class="profile-image" onerror="this.src='https://via.placeholder.com/150'">
+            <h3>${sitter.name}</h3>
+            <p>${translations[lang].experience_label || 'الخبرة: '} ${sitter.experience || 0} ${lang === 'ar' ? 'سنوات' : 'years'}</p>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+        const translations = {
+            ar: {
+    site_title: "الأيدي الآمنة",
+    nav_home: "الرئيسية",
+    nav_services: "الخدمات",
+    nav_about: "من نحن",
+    nav_contact: "تواصل معنا",
+    nav_find_babysitters: "ابحث عن جليسة أطفال",
+    nav_book_now: "احجز الآن",
+    nav_profile: "الملف الشخصي",
+    nav_login_signup: "تسجيل الدخول / إنشاء حساب",
+    nav_logout: "تسجيل الخروج",
+
+    hero_title: "راحة بالك تبدأ من هنا",
+    hero_description: "نوفر لك جليسات أطفال مؤهلات وموثوقات ليكون أطفالك في أيدٍ آمنة.",
+    hero_button: "ابحث عن جليسات الأطفال",
+
+services_title: "خدماتنا",
+
+      service1_title: "بيبي سيترز موثوقون",
+      service1_description: "جميع جليسات الأطفال مدربات وموثوقات، مع فحص خلفية شامل لضمان أمان طفلك وراحتك.",
+
+      service2_title: "مواعيد مرنة",
+      service2_description: "نوفر خدمة الرعاية بالساعات أو الأيام أو بشكل مستمر لتناسب جدولك.",
+
+      service3_title: "أنشطة تعليمية وترفيهية",
+      service3_description: "البيبي سيترز يهتمون بالرعاية واللعب والتعليم معًا ليكون طفلك سعيدًا ومشاركًا.",
+
+    faq_link: "الأسئلة الشائعة",
+
+    footer_company_title: "الأيدي الآمنة",
+    footer_company_description: "منصتك لحجز جليسات أطفال معتمدات بسهولة وثقة.",
+    footer_links_title: "روابط",
+    footer_contact_title: "تواصل معنا",
+    footer_contact_email: "البريد الإلكتروني: Safehands.com",
+    footer_contact_phone: "الهاتف: 01279581077",
+    footer_contact_address: "العنوان: 202 شارع باكوس، الإسكندرية، مصر",
+    footer_copyright: "© 2025 الأيدي الآمنة. جميع الحقوق محفوظة."
+},
+
+            en: {
+    site_title: "Safe Hands",
+    nav_home: "Home",
+    nav_services: "Services",
+    nav_about: "About",
+    nav_contact: "Contact",
+    nav_find_babysitters: "Find a Babysitter",
+    nav_book_now: "Book Now",
+    nav_profile: "Profile",
+    nav_login_signup: "Login / Sign Up",
+    nav_logout: "Logout",
+
+    hero_title: "Your peace of mind starts here",
+    hero_description: "We provide trusted, qualified babysitters to keep your children safe and happy.",
+    hero_button: "Find Babysitters",
+
+services_title: "Our Services",
+
+      service1_title: "Trusted Babysitters",
+      service1_description: "All babysitters are trained and background-checked to ensure your child’s safety and your peace of mind.",
+
+      service2_title: "Flexible Scheduling",
+      service2_description: "Book babysitting hourly, daily, or ongoing — fully tailored to your schedule.",
+
+      service3_title: "Fun & Learning",
+      service3_description: "Our babysitters engage kids with safe, fun and age-appropriate educational activities.",
+
+    faq_link: "FAQ",
+
+    footer_company_title: "Safe Hands",
+    footer_company_description: "Book reliable, verified babysitters with ease and confidence.",
+    footer_links_title: "Links",
+    footer_contact_title: "Contact Us",
+    footer_contact_email: "Email: Safehands.com",
+    footer_contact_phone: "Phone: 01279581077",
+    footer_contact_address: "202 Bakos Street, Alexandria, Egypt",
+    footer_copyright: "© 2025 Safe Hands. All rights reserved."
+}
+
+        };
+
+
+        function changeLanguage() {
+            const lang = document.getElementById('languageSelect').value;
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key];
+            });
+
+            localStorage.setItem('language', lang);
+            updateNavigation();
+        }
+
+        function updateNavigation() {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const loginLink = document.getElementById('login-link');
+            const profileLink = document.getElementById('profile-link');
+            const logoutLink = document.getElementById('logout-link');
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameText = document.getElementById('user-name-text');
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id') || userData.user_id;
+            const userEmail = urlParams.get('email') || userData.user_email || userData.email;
+            const userName = userData.name || 'مستخدم';
+
+            if (loginLink && profileLink && logoutLink && userNameDisplay && userNameText) {
+                if (userEmail) {
+                    loginLink.style.display = 'none';
+                    profileLink.style.display = 'block';
+                    logoutLink.style.display = 'block';
+                    userNameDisplay.style.display = 'inline-flex';
+                    userNameText.textContent = userName;
+                    profileLink.href = `/my_pro/profile.html?user_id=${userId || ''}&user_email=${encodeURIComponent(userEmail || '')}&name=${encodeURIComponent(userName || '')}`;
+                } else {
+                    loginLink.style.display = 'block';
+                    profileLink.style.display = 'none';
+                    logoutLink.style.display = 'none';
+                    userNameDisplay.style.display = 'none';
+                }
+            }
+
+            console.log("User ID from URL:", userId);
+            console.log("User Email from URL:", userEmail);
+            console.log("User Name from localStorage:", userName);
+            console.log("User Data from localStorage:", userData);
+            console.log("Profile link set to:", profileLink ? profileLink.href : 'Profile link not found');
+        }
+
+        function logout() {
+            localStorage.removeItem('userData');
+            updateNavigation();
+            window.location.href = '/log/login.html';
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        window.onload = function() {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage();
+            updateNavigation();
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('user_id');
+            const userEmail = urlParams.get('email');
+            const name = urlParams.get('name');
+            let userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+            if (userId || userEmail) {
+                userData = { user_id: userId, user_email: userEmail, name: name || userData.name || '' };
+                localStorage.setItem('userData', JSON.stringify(userData));
+            } else if (userData && !userData.user_email && userData.email) {
+                userData.user_email = userData.email;
+                localStorage.setItem('userData', JSON.stringify(userData));
+            }
+
+            updateNavigation();
+        });
+// تحميل البيانات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', async () => {
+            const savedLang = localStorage.getItem('language') || 'ar';
+            document.getElementById('languageSelect').value = savedLang;
+            lang = savedLang;
+            changeLanguage();
+
+            // جلب البيانات من Supabase وعرضها
+            const babysitters = await fetchBabysitters();
+            displayBabysitters(babysitters);
+        });
+    </script>
+</body>
+</html>
