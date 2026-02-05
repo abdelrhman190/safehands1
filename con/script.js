@@ -82,120 +82,141 @@ function changeLanguage() {
     populateUserData();
 }
 
-// تحديث النافبار
+// ==================== 2. تحديث الناف بار (Navbar) ====================
 function updateNavbar() {
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const loginSignupLink = document.getElementById('login-signup-link');
-    const dashboardLink = document.getElementById('dashboard-link');
+    const userEmail = userData.contact_info || userData.email;
+    const userName = userData.name;
+
+    const loginLink = document.getElementById('login-link') || document.getElementById('login-signup-link');
     const logoutLink = document.getElementById('logout-link');
     const userNameDisplay = document.getElementById('user-name-display');
     const userNameText = document.getElementById('user-name-text');
 
-    if (userData.email) {
-        loginSignupLink.style.display = 'none';
-        dashboardLink.style.display = 'block';
-        logoutLink.style.display = 'block';
-        userNameDisplay.style.display = 'inline-flex';
-        userNameText.textContent = userData.name || 'User';
+    if (userEmail) {
+        if (loginLink) loginLink.style.display = 'none';
+        if (logoutLink) logoutLink.style.display = 'block';
+        if (userNameDisplay) {
+            userNameDisplay.style.display = 'inline-flex';
+            if (userNameText) userNameText.textContent = userName || "مستخدم";
+        }
     } else {
-        loginSignupLink.style.display = 'block';
-        dashboardLink.style.display = 'none';
-        logoutLink.style.display = 'none';
-        userNameDisplay.style.display = 'none';
+        if (loginLink) loginLink.style.display = 'block';
+        if (logoutLink) logoutLink.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.style.display = 'none';
     }
+}
+
+// ==================== 3. تغيير اللغة ====================
+function changeLanguage() {
+    const langSelect = document.getElementById('languageSelect');
+    if (!langSelect) return;
+    const lang = langSelect.value;
+
+    document.getElementById('htmlLang').setAttribute('lang', lang);
+    document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    
+    const formLangInput = document.getElementById('formLanguage');
+    if (formLangInput) formLangInput.value = lang;
+
+    // تحديث الـ Placeholders
+    document.getElementById('name').placeholder = lang === 'ar' ? 'أدخل اسمك' : 'Enter your name';
+    document.getElementById('email').placeholder = lang === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email';
+    document.getElementById('phone').placeholder = lang === 'ar' ? 'أدخل رقم هاتفك' : 'Enter your phone number';
+    document.getElementById('message').placeholder = lang === 'ar' ? 'اكتب رسالتك هنا' : 'Write your message here';
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang][key]) element.textContent = translations[lang][key];
+    });
+
+    localStorage.setItem('language', lang);
+    updateNavbar();
+    populateUserData();
 }
 
 function logout() {
     localStorage.removeItem('userData');
-    updateNavbar();
     window.location.href = '/log/login.html';
 }
 
+// ==================== 4. تعبئة بيانات المستخدم المسجل تلقائياً ====================
 function populateUserData() {
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    if (userData.email) {
+    const userEmail = userData.contact_info || userData.email;
+    
+    if (userEmail) {
         document.getElementById('name').value = userData.name || '';
-        document.getElementById('email').value = userData.email || '';
-        document.getElementById('name').disabled = true;
-        document.getElementById('email').disabled = true;
-    } else {
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('name').disabled = false;
-        document.getElementById('email').disabled = false;
+        document.getElementById('email').value = userEmail || '';
+        // نترك الحقول قابلة للتعديل أو نغلقها حسب رغبتك
+        // document.getElementById('name').readOnly = true; 
     }
 }
 
-let supabaseClient; // هنخليها جلوبال
-
+// ==================== 5. التحميل عند البدء ====================
 window.onload = function() {
     const savedLang = localStorage.getItem('language') || 'ar';
-    document.getElementById('languageSelect').value = savedLang;
-    changeLanguage();
-    updateNavbar();
-    populateUserData();
+    const langSelect = document.getElementById('languageSelect');
+    if (langSelect) langSelect.value = savedLang;
+
+    // تهيئة Supabase
+    const supabaseUrl = 'https://ebzhfytrzcxsnepcudyl.supabase.co'; 
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc';
+    supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
     // تهيئة EmailJS
-    emailjs.init('vOU5RAqgHi0v0NJVa'); // استبدل بالـ Public Key بتاعك
-
-    // تهيئة Supabase (غيرنا الاسم لـ supabaseClient)
-    const supabaseUrl = 'https://ebzhfytrzcxsnepcudyl.supabase.co'; 
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImViemhmeXRyemN4c25lcGN1ZHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMDMyNjcsImV4cCI6MjA2MTc3OTI2N30.8sJgkbHRYMddNadF9aPgeLmNRuo7XOa3iyrXjHkumTc'; // حط الـ anon key هنا
-    supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-};
-
-// معالجة الفورم
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const form = this;
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
-    const button = form.querySelector('button');
-
-    button.disabled = true;
-    button.textContent = 'جارٍ الإرسال...';
-
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const phone = form.phone.value.trim();
-    const message = form.message.value.trim();
-    const language = form.formLanguage.value;
-
-    if (!name || !email || !phone || !message) {
-        errorMessage.style.display = 'block';
-        successMessage.style.display = 'none';
-        button.disabled = false;
-        button.textContent = translations[language].submit_button;
-        setTimeout(() => errorMessage.style.display = 'none', 5000);
-        return;
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('vOU5RAqgHi0v0NJVa');
     }
 
-    // إدخال البيانات في Supabase
-    supabaseClient.from('contact_messages')
-        .insert([{ name, email, phone, message, language }])
-        .then(({ data, error }) => {
-            if (error) throw error;
+    changeLanguage();
+};
 
-            // بعد الحفظ ابعت ايميل
-            return emailjs.send('service_x5btrdq', 'template_e7jcew8', {
-                name, email, phone, message, language
-            });
-        })
-        .then(response => {
-            console.log('Email sent:', response);
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            form.reset();
-            setTimeout(() => successMessage.style.display = 'none', 5000);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            errorMessage.style.display = 'block';
-            successMessage.style.display = 'none';
-            setTimeout(() => errorMessage.style.display = 'none', 5000);
-        })
-        .finally(() => {
-            button.disabled = false;
-            button.textContent = translations[language].submit_button;
-        });
+// ==================== 6. معالجة النموذج (Form Submit) ====================
+document.getElementById('contactForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const form = this;
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const btn = form.querySelector('button');
+    const lang = document.getElementById('languageSelect').value;
+
+    btn.disabled = true;
+    btn.textContent = lang === 'ar' ? 'جارٍ الإرسال...' : 'Sending...';
+
+    const formData = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        message: form.message.value.trim(),
+        language: lang
+    };
+
+    try {
+        // أ. الحفظ في Supabase
+        const { error: dbError } = await supabaseClient
+            .from('contact_messages')
+            .insert([formData]);
+
+        if (dbError) throw dbError;
+
+        // ب. الإرسال عبر EmailJS
+        await emailjs.send('service_x5btrdq', 'template_e7jcew8', formData);
+
+        successMsg.style.display = 'block';
+        errorMsg.style.display = 'none';
+        form.reset();
+        populateUserData(); // لإعادة وضع بيانات المستخدم بعد المسح
+    } catch (err) {
+        console.error(err);
+        errorMsg.style.display = 'block';
+        successMsg.style.display = 'none';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = translations[lang].submit_button;
+        setTimeout(() => {
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+        }, 5000);
+    }
 });

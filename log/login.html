@@ -49,13 +49,17 @@
         <div class="status" id="status"><i class="fas fa-info-circle"></i> جاهز لتسجيل الدخول...</div>
         <div class="form-container sign-up">
             <form id="signup-form" enctype="multipart/form-data">
-                <h1 data-i18n="form_title_signup">إنشاء حساب</h1>
-                <input type="file" id="signup-profile-pic" accept="image/*" required data-i18n-placeholder="label_profile_pic">
+               
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span data-i18n="signup_span">أو استخدم بريدك الإلكتروني للتسجيل</span>
                 <input type="text" id="signup-name" placeholder="أدخل اسمك" required data-i18n-placeholder="label_name">
-                <input type="tel" id="signup-phone" placeholder="أدخل رقم الهاتف" required data-i18n-placeholder="label_phone">
                 <input type="email" id="signup-email" placeholder="أدخل بريدك الإلكتروني" required data-i18n-placeholder="label_email">
                 <input type="password" id="signup-password" placeholder="أدخل كلمة المرور" required data-i18n-placeholder="label_password">
-                <input type="text" id="signup-verification-code" placeholder="أدخل رمز التأكيد" data-i18n-placeholder="label_verification_code">
                 <button type="submit" data-i18n="btn_signup">إنشاء حساب</button>
             </form>
         </div>

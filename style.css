@@ -481,7 +481,7 @@ section i {
             color: #ff6b81;
             margin-bottom: 20px;
         }
-.babysitter-slider {
+/* .babysitter-slider {
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -494,8 +494,8 @@ section i {
     display: flex;
     animation: slide 10s linear infinite;
     white-space: nowrap;
-    will-change: transform; /* تحسين الأداء */
-    gap: 15px; /* التباعد بين الكروت */
+    will-change: transform; 
+    gap: 15px; 
 }
 
 .babysitter-card {
@@ -513,7 +513,7 @@ section i {
 .babysitter-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .profile-image {
     width: 120px;
@@ -591,3 +591,61 @@ section i {
         gap: 8px;
     }
 }
+
+/* الحاوية الخارجية الثابتة */
+
+    /* الشريط الذي يتحرك */
+    .babysitter-container {
+        display: flex;
+        gap: 25px;
+        width: max-content; /* مهم جداً عشان الشريط ياخد مساحة الكروت كلها */
+        animation: scroll 30s linear infinite; /* سرعة الحركة */
+    }
+/* الحركة توقف فقط لما الماوس ييجي "فوق أي كارت" جزيء من الحاوية */
+.babysitter-container:has(.babysitter-card-new:hover) {
+    animation-play-state: paused;
+}
+
+/* إضافة تأثير بسيط للكارت لما يقف عليه الماوس لزيادة التفاعل */
+.babysitter-card-new:hover {
+    transform: scale(1.05); /* تكبير خفيف */
+    border-color: #ff6b6b;
+    z-index: 10;
+    cursor: pointer;
+}
+    .babysitter-card-new {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        padding: 25px;
+        text-align: center;
+        min-width: 280px;
+        border: 1px solid #f0f0f0;
+    }
+
+    /* تعريف حركة الأنميشن */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-280px * 5 - 25px * 5)); } /* يتحرك بمقدار عرض الكروت */
+    }
+
+    /* تنسيق اتجاه الحركة بناءً على اللغة */
+    [dir="rtl"] .babysitter-container {
+        animation: scroll-rtl 30s linear infinite;
+    }
+
+    @keyframes scroll-rtl {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(280px * 5 + 25px * 5)); }
+    }
+
+    .sitter-image-container { 
+        width: 110px; height: 110px; margin: 0 auto 15px; 
+        border-radius: 50%; overflow: hidden; border: 4px solid #ff6b6b; 
+    }
+    .sitter-image-container img { width: 100%; height: 100%; object-fit: cover; }
+    .rating-stars { color: #fdcb6e; margin-bottom: 12px; }
+    .book-btn-small { 
+        display: block; background: #ff6b6b; color: white; text-decoration: none; 
+        padding: 10px; border-radius: 10px; font-weight: bold; margin-top: 15px; 
+    }

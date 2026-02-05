@@ -76,37 +76,53 @@ const translations = {
             localStorage.setItem('language', lang);
             updateNavbar();
         }
-function updateNavbar() {
+function updateNavigation() {
+    // 1. جلب البيانات من LocalStorage
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const loginLink = document.getElementById('login-link'); // تعديل الـ ID
-    const profileLink = document.getElementById('profile-link'); // تعديل الـ ID ليطابق HTML
+    
+    // 2. تحديد العناصر من الـ DOM
+    const loginLink = document.getElementById('login-link');
     const logoutLink = document.getElementById('logout-link');
     const userNameDisplay = document.getElementById('user-name-display');
     const userNameText = document.getElementById('user-name-text');
 
-    // لوغ للتصحيح
-    console.log('userData:', userData);
+    // 3. استخراج البيانات (تأكدنا أن الحقل في قاعدة بياناتك اسمه contact_info)
+    const userEmail = userData.contact_info || userData.email;
+    const userName = userData.name;
 
-    if (userData.email) {
-        loginLink.style.display = 'none';
-        profileLink.style.display = 'block';
-        logoutLink.style.display = 'block';
-        userNameDisplay.style.display = 'inline-flex';
-        userNameText.textContent = userData.name || 'مستخدم';
+    // 4. منطق التبديل
+    if (userEmail) {
+        // حالة: مسجل دخول
+        if (loginLink) loginLink.style.display = 'none';
+        if (logoutLink) logoutLink.style.display = 'block';
+        if (userNameDisplay) {
+            userNameDisplay.style.display = 'inline-flex';
+            if (userNameText) userNameText.textContent = userName || "مستخدم";
+        }
     } else {
-        loginLink.style.display = 'block';
-        profileLink.style.display = 'none';
-        logoutLink.style.display = 'none';
-        userNameDisplay.style.display = 'none';
+        // حالة: غير مسجل دخول
+        if (loginLink) loginLink.style.display = 'block';
+        if (logoutLink) logoutLink.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.style.display = 'none';
     }
+
+    // سجل البيانات للتأكد في الـ Console (اختياري)
+    console.log("Current User Data:", userData);
 }
 
 function logout() {
-    localStorage.removeItem('userData');
-    updateNavbar();
-    window.location.href = '../log/login.html';
+    // حذف البيانات من المتصفح
+    localStorage.removeItem('userData'); 
+    
+    // تحديث الناف بار فوراً قبل التحويل
+    updateNavigation(); 
+    
+    // التوجه لصفحة اللوجين أو الرئيسية
+    window.location.href = '/log/login.html'; 
 }
 
+// تأكد من استدعاء الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', updateNavigation);
 document.addEventListener('DOMContentLoaded', () => {
     const savedLang = localStorage.getItem('language') || 'ar';
     document.getElementById('languageSelect').value = savedLang;

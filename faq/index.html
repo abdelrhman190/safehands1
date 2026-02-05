@@ -646,42 +646,40 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
 </head>
 <body>
   <header>
-    <nav>
-      <div id="logo" class="logo">
-        <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
-        <span data-i18n="site_title">Safe Hands</span>
-      </div>
-      <div class="language-selector">
-        <select id="languageSelect" onchange="changeLanguage()">
-          <option value="ar">🇪🇬 عربي</option>
-          <option value="en">🇺🇸 English</option>
-        </select>
-      </div>
-      <div class="menu-toggle">
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle">☰</label>
-        <ul>
-          <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
-          <li><a href="../Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
-          <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
-          <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
-          <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
-   
-          <li id="dashboard-link" style="display: none;">
- 
-          </li>
-          <li id="logout-link" style="display: none;"><a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a></li>
-          <li id="login-signup-link"><a href="../log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
-          <span id="user-name-display" class="user-name-display">
-            <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
+        <nav>
+            <div id="logo" class="logo">
+                <img src="images-1-removebg-preview.png" alt="Safe Hands Icon">
+                <span data-i18n="site_title">Safe Hands</span>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect" onchange="changeLanguage()">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="menu-toggle">
+                <input type="checkbox" id="menu-toggle">
+                <label for="menu-toggle">☰</label>
+                <ul>
+                    <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+                    <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+                    <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+                    <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+                    <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
+
+                    <li id="profile-link" style="display: none;"></li>
+                    <li><a href="#" id="logout-link" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout" style="display: none;">تسجيل الخروج</a></li>
+                    <li><a href="/log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a></li>
+                    <span id="user-name-display" class="user-name-display">
+                        <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
                             <i class="fas fa-user"></i>
                         <span id="user-name-text"></span>
                     </a>
-          </span>
-        </ul>
-      </div>
-    </nav>
-  </header>
+                    </span>
+                </ul>
+            </div>
+        </nav>
+    </header>
   <section class="hero">
     <h1 data-i18n="hero_title">كيف يمكننا مساعدتك؟</h1>
     <p data-i18n="hero_description">ابحث عن نصائح وإجابات من فريق الدعم لدينا بسرعة أو تواصل معنا</p>

@@ -84,8 +84,8 @@ nav ul {
 nav ul li a {
     color: #4a4a4a;
     text-decoration: none;
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
 
@@ -629,4 +629,21 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
     .Social-Media a i {
         font-size: 14px;
     }
+}
+/* إخفاء الهامبورجر في الشاشة الكبيرة */
+.hamburger-icon, #menu-toggle-input {
+    display: none !important;
+}
+
+/* تنسيق اسم المستخدم ليظهر بشكل هادئ */
+.user-profile-btn {
+    color: #4a4a4a !important;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-profile-btn i {
+    color: #ff6b81; /* لون وردي هادئ للأيقونة */
 }

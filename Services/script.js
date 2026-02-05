@@ -98,41 +98,70 @@ const translations = {
             localStorage.setItem('language', lang);
             updateNavbar();
         }
-
-        // تحديث الناف بار بناءً على حالة تسجيل الدخول
-        function updateNavbar() {
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-            const loginSignupLink = document.getElementById('login-signup-link');
-            const dashboardLink = document.getElementById('dashboard-link');
-            const logoutLink = document.getElementById('logout-link');
-            const userNameDisplay = document.getElementById('user-name-display');
-            const userNameText = document.getElementById('user-name-text');
-
-            if (userData.email) {
-                loginSignupLink.style.display = 'none';
-                dashboardLink.style.display = 'block';
-                logoutLink.style.display = 'block';
-                userNameDisplay.style.display = 'inline-flex';
-                userNameText.textContent = userData.name || 'مستخدم';
-            } else {
-                loginSignupLink.style.display = 'block';
-                dashboardLink.style.display = 'none';
-                logoutLink.style.display = 'none';
-                userNameDisplay.style.display = 'none';
-            }
-        }
-
-        // دالة تسجيل الخروج
-        function logout() {
-            localStorage.removeItem('userData');
-            updateNavbar();
-            window.location.href = '../log/login.html';
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('language') || 'ar';
-            document.getElementById('languageSelect').value = savedLang;
-            changeLanguage();
-            updateNavbar();
-        });
+// تم توحيد الاسم إلى updateNavbar ليتناسب مع بقية ملفاتك
+function updateNavbar() {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
     
+    // تأكد أن هذه الـ IDs تطابق الموجود في ملف الـ HTML (login-link أو login-signup-link)
+    const loginLink = document.getElementById('login-signup-link') || document.getElementById('login-link');
+    const logoutLink = document.getElementById('logout-link');
+    const userNameDisplay = document.getElementById('user-name-display');
+    const userNameText = document.getElementById('user-name-text');
+
+    const userEmail = userData.contact_info || userData.email;
+    const userName = userData.name;
+
+    if (userEmail) {
+        if (loginLink) loginLink.style.display = 'none';
+        if (logoutLink) logoutLink.style.display = 'block';
+        if (userNameDisplay) {
+            userNameDisplay.style.display = 'inline-flex';
+            if (userNameText) userNameText.textContent = userName || "مستخدم";
+        }
+    } else {
+        if (loginLink) loginLink.style.display = 'block';
+        if (logoutLink) logoutLink.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.style.display = 'none';
+    }
+}
+
+function changeLanguage() {
+    const langSelect = document.getElementById('languageSelect');
+    if (!langSelect) return;
+    
+    const lang = langSelect.value;
+    const htmlLang = document.getElementById('htmlLang');
+    if (htmlLang) {
+        htmlLang.setAttribute('lang', lang);
+        htmlLang.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    localStorage.setItem('language', lang);
+    updateNavbar(); // تحديث الناف بار بعد تغيير اللغة
+}
+
+function logout() {
+    localStorage.removeItem('userData'); 
+    updateNavbar(); 
+    window.location.href = '/log/login.html'; 
+}
+
+// استدعاء واحد فقط عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('language') || 'ar';
+    const langSelect = document.getElementById('languageSelect');
+    if (langSelect) {
+        langSelect.value = savedLang;
+    }
+    
+    // ترتيب الاستدعاء مهم
+    changeLanguage(); 
+    updateNavbar();
+});
