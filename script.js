@@ -6,7 +6,7 @@ const translations = {
         nav_about: "من نحن",
         nav_contact: "تواصل معنا",
         nav_find_babysitters: "ابحث عن جليسات أطفال",
-
+        nav_logout: "تسجيل الخروج",
         nav_login_signup: "تسجيل الدخول / إنشاء حساب",
         hero_title: "الأيدي الآمنة: جليسات أطفال موثوقة",
         hero_description: "احجز جليسات أطفال موثوقة ومُتحقق منها بسهولة وثقة.",
@@ -35,7 +35,7 @@ const translations = {
         nav_about: "About",
         nav_contact: "Contact",
         nav_find_babysitters: "Find Babysitters",
-
+        nav_logout: "Logout",
         nav_login_signup: "Login/Sign Up",
         hero_title: "Safe Hands: Trusted Babysitting",
         hero_description: "Book reliable, vetted babysitters for your children with ease and confidence.",
@@ -59,67 +59,89 @@ const translations = {
     }
 };
 
+// 1. نظام تغيير اللغة
 function changeLanguage() {
     const lang = document.getElementById('languageSelect').value;
-    document.getElementById('htmlLang').setAttribute('lang', lang);
-    document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    const htmlTag = document.getElementById('htmlLang');
+    
+    if (htmlTag) {
+        htmlTag.setAttribute('lang', lang);
+        htmlTag.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        element.textContent = translations[lang][key];
+        if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
     });
 
     localStorage.setItem('language', lang);
 }
 
-window.onload = function() {
-    const savedLang = localStorage.getItem('language') || 'ar';
-    document.getElementById('languageSelect').value = savedLang;
-    changeLanguage();
-};
-
-function scrollToSection(sectionId) {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-}
-
-const navLinks = document.querySelectorAll('.nav-link');
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 60) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    <a href="/baby/index.html?email=${urlParams.get('email') || ''}">عرض البيبي سيتر</a>
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
-const urlParams = new URLSearchParams(window.location.search);
-const userId = urlParams.get('user_id');
-const profileLink = document.getElementById('profile-link');
-if (profileLink && userId) {
-    profileLink.href = `/my_pro/profile.html?user_id=${userId}`;
-}
-document.addEventListener('DOMContentLoaded', () => {
-    const userData = JSON.parse(localStorage.getItem('userData'));
+// 2. تحديث الناف بار (دخول/خروج)
+function updateNavigation() {
+    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
     const loginLink = document.getElementById('login-link');
-    const profileLink = document.getElementById('profile-link');
+    const logoutLink = document.getElementById('logout-link');
+    const userNameDisplay = document.getElementById('user-name-display');
+    const userNameText = document.getElementById('user-name-text');
 
-    if (loginLink && profileLink) {
-        if (userData && userData.email) {
-            loginLink.style.display = 'none';
-            profileLink.style.display = 'block';
-        } else {
-            loginLink.style.display = 'block';
-            profileLink.style.display = 'none';
+    // التحقق من وجود بيانات (إيميل أو توكن)
+    if (userData.email) {
+        if (loginLink) loginLink.style.display = 'none';
+        if (logoutLink) logoutLink.style.display = 'block';
+        if (userNameDisplay) {
+            userNameDisplay.style.display = 'inline-flex';
+            userNameText.textContent = userData.name || "User";
         }
+    } else {
+        if (loginLink) loginLink.style.display = 'block';
+        if (logoutLink) logoutLink.style.display = 'none';
+        if (userNameDisplay) userNameDisplay.style.display = 'none';
     }
+}
+
+// 3. تسجيل الخروج
+function logout() {
+    localStorage.removeItem('userData');
+    updateNavigation();
+    window.location.reload(); // إعادة تحميل الصفحة لتحديث الحالة
+}
+
+// 4. تشغيل الوظائف عند التحميل
+document.addEventListener('DOMContentLoaded', () => {
+    // ضبط اللغة
+    const savedLang = localStorage.getItem('language') || 'ar';
+    const langSelect = document.getElementById('languageSelect');
+    if (langSelect) {
+        langSelect.value = savedLang;
+        changeLanguage();
+    }
+
+    // تحديث الأزرار
+    updateNavigation();
+
+    // الأنيميشن بتاع السكرول (Active Link)
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= (sectionTop - 100)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            // التأكد أن الرابط يشير لنفس القسم
+            if (link.getAttribute('href').includes(current) && current !== '') {
+                link.classList.add('active');
+            }
+        });
+    });
 });

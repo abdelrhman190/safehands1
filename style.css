@@ -89,64 +89,8 @@ nav .menu-toggle input[type="checkbox"] {
 nav .menu-toggle input[type="checkbox"]:checked ~ ul {
     display: block;
 }
-.user-name-display {
-            display: none;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-left: 10px;
-            padding: 5px 10px;
-            background-color: #ecf0f1;
-            border-radius: 15px;
-        }
-        .user-name-display i {
-            margin-right: 5px;
-            color: #3498db;
-        }
-        .menu-toggle ul li .user-name-display {
-            display: inline-flex;
-            align-items: center;
-        }
-        /* .typewriter {
-    overflow: hidden;
-    white-space: nowrap;
-    width: 0;
-    animation: typing 4s steps(40, end) infinite, blink 0.75s infinite;
-
-}
 
 
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-} */
-
-
-@media (max-width: 768px) {
-    nav ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #0078D7;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    nav .menu-toggle {
-        display: block;
-    }
-
-    nav .menu-toggle label {
-        display: block;
-    }
-
-    nav .menu-toggle input[type="checkbox"]:checked ~ ul {
-        display: block;
-    }
-}
 
 .hero {
     height: 100vh;
@@ -515,81 +459,11 @@ section i {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 } */
 
-.profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 3px solid #4CAF50;
-    transition: transform 0.3s ease;
-}
 
-.babysitter-card:hover .profile-image {
-    transform: scale(1.1);
-}
-
-.babysitter-card h3 {
-    font-size: 1.3em;
-    margin: 10px 0;
-    color: #333;
-    font-weight: 600;
-}
-
-.babysitter-card p {
-    font-size: 1em;
-    color: #555;
-    margin: 5px 0;
-    font-weight: 400;
-}
-
-@keyframes slide {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%); /* تحريك نصف المسافة بسبب التكرار */
-    }
-}
 
 /* إيقاف الأنيميشن عند التحويم (اختياري) */
 .babysitter-slider:hover .babysitter-grid {
     animation-play-state: paused;
-}
-
-/* جعل الأنيميشن متجاوب */
-@media (max-width: 768px) {
-    .babysitter-card {
-        width: 180px;
-        padding: 15px;
-    }
-    .profile-image {
-        width: 100px;
-        height: 100px;
-    }
-    .babysitter-grid {
-        gap: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .babysitter-card {
-        width: 140px;
-        padding: 12px;
-    }
-    .profile-image {
-        width: 80px;
-        height: 80px;
-    }
-    .babysitter-card h3 {
-        font-size: 1.1em;
-    }
-    .babysitter-card p {
-        font-size: 0.9em;
-    }
-    .babysitter-grid {
-        gap: 8px;
-    }
 }
 
 /* الحاوية الخارجية الثابتة */
@@ -649,3 +523,190 @@ section i {
         display: block; background: #ff6b6b; color: white; text-decoration: none; 
         padding: 10px; border-radius: 10px; font-weight: bold; margin-top: 15px; 
     }
+     @media (max-width: 768px) {
+    nav ul {
+        display: none; /* مخفي وهتظهره الجافا سكريبت أو الشيك بوكس */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        /* غيرت اللون هنا من أزرق لوردي هادي */
+        background: linear-gradient(135deg, #fcdcec, #ffb6c1); 
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        flex-direction: column; 
+        text-align: center;
+        gap: 15px;
+    }
+
+    /* عشان لما تفتح المنيو تظهر */
+    nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+        display: flex;
+    }
+}
+/* تنسيق خاص بـ li اللي شايل الاسم */
+
+#team {
+    overflow: hidden; /* أهم سطر عشان الصفحة متفرشش بالعرض */
+    width: 100%;
+    padding: 60px 0;
+}
+
+.babysitter-container {
+    display: flex;
+    gap: 25px;
+    width: max-content;
+    /* الحركة بناءً على اتجاه الصفحة */
+    animation: scroll 30s linear infinite;
+}
+
+/* لو الصفحة RTL الحركة تبدأ من اليمين */
+[dir="rtl"] .babysitter-container {
+    animation: scroll-rtl 30s linear infinite;
+}
+
+@keyframes scroll-rtl {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(1000px); } /* الرقم ده بيتغير حسب عدد الكروت */
+}
+/* حاوية الكبسولة */
+.user-profile-capsule {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8); /* خلفية زجاجية */
+    padding: 4px 12px 4px 6px; /* مسافة أقل من جهة الصورة */
+    border-radius: 50px; /* جعلها كبسولة */
+    border: 1px solid #ffb6c1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 10px;
+}
+
+.user-profile-capsule:hover {
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(255, 107, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+/* حاوية الصورة الدائرية */
+.user-avatar-container {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #ff6b81;
+}
+
+.user-avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* تنسيق النص داخل الكبسولة */
+#user-name-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a4a4a;
+}
+/* تعريف حركة السلايدر الأساسية */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-280px * 5 - 25px * 5)); }
+}
+
+/* حركة السلايدر للغة العربية (من اليمين لليسار) */
+@keyframes scroll-rtl {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(280px * 5 + 25px * 5)); }
+}
+@media (max-width: 768px) {
+    /* السطر ده هو اللي بيخلي المنيو تظهر لما تدوس على علامة الـ ☰ */
+    nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+        display: flex !important;
+    }
+    
+    .hamburger {
+        display: block !important; /* عشان تظهر علامة الـ ☰ */
+    }
+}
+.hamburger {
+    display: none;
+    font-size: 28px;
+    color: #ff6b81;
+    cursor: pointer;
+    padding: 10px;
+}
+/* تنسيق زرار تسجيل الخروج */
+#logout-item {
+    display: none; /* الـ JS هو اللي هيخليه flex لما اليوزر يدخل */
+    align-items: center;
+}
+
+#logout-link {
+    background-color: #ffe4e8; /* لون وردي خفيف جداً */
+    color: #ff6b81 !important; /* لون النص وردي غامق */
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px dashed #ffb6c1; /* إطار منقط عشان يبان إنه زرار إجراء */
+    transition: all 0.3s ease;
+}
+
+#logout-link:hover {
+    background-color: #ff6b81;
+    color: #fff !important;
+    border-style: solid;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center; /* يضمن أن الكبسولة وزر الخروج على خط واحد */
+    gap: 15px;
+}
+
+/* تأكد أن زر الخروج يظهر بشكل واضح */
+#logout-item a {
+    color: #ff6b81 !important;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 5px 10px;
+    border: 1px solid #ffb6c1;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+#logout-item a:hover {
+    background: #ff6b81;
+    color: white !important;
+}
+@media (max-width: 768px) {
+    /* 1. القائمة لازم تكون مخفية في البداية */
+    nav ul {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #fcdcec, #ffb6c1);
+        padding: 20px;
+        z-index: 1000;
+    }
+
+    /* 2. تظهر فقط لما الـ Checkbox يكون Checked */
+    nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+        display: flex !important;
+    }
+
+    /* 3. عشان نضمن إن زرار الهامبرجر شغال */
+    .hamburger {
+        display: block !important;
+        cursor: pointer;
+        font-size: 28px;
+        color: #ff6b81;
+    }
+}
