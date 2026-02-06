@@ -187,40 +187,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- إنشاء حساب (إدخال مباشر للداتا بيز) ---
     signupForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const name = document.getElementById('signup-name').value.trim();
-        const email = document.getElementById('signup-email').value.trim();
-        const password = document.getElementById('signup-password').value.trim();
-        // const phone = document.getElementById('signup-phone').value.trim();
-        const lang = document.getElementById('languageSelect')?.value || 'ar';
+    e.preventDefault();
 
-        updateStatus(translations[lang].msg_sending_data, 'info');
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+    const imageFile = document.getElementById('signup-image').files[0];
+    const lang = document.getElementById('languageSelect')?.value || 'ar';
 
-        try {
-            const randomId = crypto.randomUUID(); 
-            const { error } = await supabaseClient
-                .from('users')
-                .insert([{
-                    id: randomId,
-                    name: name,
-                    contact_info: email,
-                    pass: password,
-                    // phone: phone
-                }]);
+    updateStatus(translations[lang].msg_sending_data, 'info');
 
-            if (error) {
-                if (error.code === '23505') throw new Error(translations[lang].msg_email_exists);
-                throw error;
-            }
+    try {
+        const userId = crypto.randomUUID();
+        let imageUrl = null;
 
-            updateStatus(translations[lang].msg_signup_success, 'success');
-            signupForm.reset();
-            setTimeout(() => container.classList.remove("sign-up-mode"), 2000);
+        // رفع الصورة لو موجودة
+        if (imageFile) {
+            const fileExt = imageFile.name.split('.').pop();
+            const fileName = `${userId}.${fileExt}`;
 
-        } catch (err) {
-            updateStatus(err.message, 'error');
-        }
-    });
+            const { error: uploadError } = await supabaseClient
+                .storage
+                .from('avatars')
+                .upload(fileName, imageFile, { cacheControl: '3600', upsert: true });
+
+            if (uploadError) throw uploadError;
+
+            // جلب رابط الصورة
+            const { data: imageData } = supabaseClient
+    .storage
+    .from('avatars')
+    .getPublicUrl(fileName);
+
+imageUrl = imageData.publicUrl;}
+
+
+        // إدخال المستخدم في الداتا بيز مع رابط الصورة
+        const { error } = await supabaseClient
+            .from('users')
+            .insert([{
+                id: userId,
+                name: name,
+                contact_info: email,
+                pass: password,
+                image_url: imageUrl // ← هنا الرابط
+            }]);
+
+        if (error) throw error;
+
+        updateStatus(translations[lang].msg_signup_success, 'success');
+        signupForm.reset();
+        setTimeout(() => container.classList.remove("sign-up-mode"), 2000);
+
+    } catch (err) {
+        console.error(err);
+        updateStatus("حصل خطأ أثناء إنشاء الحساب", "error");
+    }
+});
 
    signinForm?.addEventListener('submit', async (e) => {
     e.preventDefault();

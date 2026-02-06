@@ -34,7 +34,7 @@
             <li><a href="/Services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
             <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
             <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
-            <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات</a></li>
+            <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات اطفال</a></li>
             
             <li id="login-item">
                 <a href="/log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول</a>
@@ -43,6 +43,7 @@
     <a href="/my_pro/profile.html" class="user-profile-capsule">
         <div class="user-avatar-container">
             <img id="user-avatar-img" src="/img/default-avatar.png" alt="User">
+
         </div>
         <span id="user-name-text"></span>
     </a>
@@ -386,6 +387,21 @@ function updateNavigation() {
         if (logoutItem) logoutItem.style.display = 'none';
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+    const user = JSON.parse(localStorage.getItem('userData'));
+    const avatarImg = document.getElementById('user-avatar-img');
+
+    if (!avatarImg) return;
+
+    if (user && user.image_url) {
+        avatarImg.src = user.image_url;
+    } else {
+        avatarImg.src = "/img/default-avatar.png";
+    }
+});
+avatarImg.onerror = () => {
+    avatarImg.src = "/img/default-avatar.png";
+};
 
 // دالة تسجيل الخروج
 function logout() {

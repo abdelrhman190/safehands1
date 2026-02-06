@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -60,6 +59,7 @@ nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 nav ul li a {
@@ -74,73 +74,151 @@ nav ul li a:hover {
     color: #ff6b81;
 }
 
-nav .menu-toggle label {
+.hamburger {
     display: none;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 24px;
+    font-size: 28px;
+    color: #ff6b81;
     cursor: pointer;
+    padding: 10px;
 }
 
-nav .menu-toggle input[type="checkbox"] {
+.menu-toggle input[type="checkbox"] {
     display: none;
 }
 
-nav .menu-toggle input[type="checkbox"]:checked ~ ul {
-    display: block;
-}
-
-.user-name-display {
-    display: none;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: #ecf0f1;
-    border-radius: 15px;
-}
-
-.user-name-display i {
-    margin-right: 5px;
-    color: #3498db;
-}
-
-.menu-toggle ul li .user-name-display {
-    display: inline-flex;
+.user-profile-capsule {
+    display: flex;
     align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 14px 5px 7px;
+    border-radius: 50px;
+    border: 1px solid #ffb6c1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    gap: 10px;
+}
+
+.user-profile-capsule:hover {
+    background: #fff;
+    box-shadow: 0 5px 12px rgba(255, 107, 129, 0.25);
+    transform: translateY(-2px);
+}
+
+.user-avatar-container {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2.5px solid #ff6b81;
+}
+
+.user-avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#user-name-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #333;
+}
+
+#logout-link {
+    background-color: #fff0f5;
+    color: #ff6b81 !important;
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 13.5px;
+    text-decoration: none;
+    border: 1.5px dashed #ffb6c1;
+    transition: all 0.3s ease;
+}
+
+#logout-link:hover {
+    background-color: #ff6b81;
+    color: white !important;
+    border-style: solid;
+    transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
     nav ul {
         display: none;
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: #0078D7;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    nav .menu-toggle {
-        display: block;
-    }
-
-    nav .menu-toggle label {
-        display: block;
+        background: linear-gradient(135deg, #fcdcec, #ffb6c1);
+        padding: 25px 20px;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        flex-direction: column;
+        text-align: center;
+        gap: 18px;
     }
 
     nav .menu-toggle input[type="checkbox"]:checked ~ ul {
-        display: block;
+        display: flex !important;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+    }
+
+    .hero-content p {
+        font-size: 12px;
+    }
+
+    .hero-content {
+        padding: 20px;
+    }
+
+    .services-section h1 {
+        font-size: 24px;
+    }
+
+    .footer .grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .Social-Media {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+
+    .hero-content p {
+        font-size: 10px;
+    }
+
+    .services-section h1 {
+        font-size: 18px;
+    }
+
+    .service-card {
+        padding: 10px;
+        min-height: 300px;
+    }
+
+    .service-image {
+        height: 120px;
     }
 }
 
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/img/323747790269902199\ $$ 1 $$.jpg');
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/img/323747790269902199 (1).jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -151,52 +229,49 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
 }
 
 .hero-content {
-    width: 80%;
-    max-width: 600px;
-    padding: 30px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    text-align: center;
-    color: white;
-    transition: all 0.3s ease;
+    width: 85%;
+    max-width: 620px;
+    padding: 35px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 10px 35px rgba(31, 38, 135, 0.35);
+    transition: all 0.4s ease;
 }
 
 .hero-content h1 {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     color: #fff;
 }
 
 .hero-content p {
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0.3px;
-    margin-bottom: 30px;
-    color: #eee;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    color: #f0f0f0;
 }
 
 .hero-content a button {
     background: linear-gradient(135deg, #ffccd5, #ff8a9b);
-    color: #000;
-    font-size: 12px;
-    padding: 10px 45px;
+    color: #111;
+    font-size: 13px;
+    padding: 12px 50px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .hero-content a button:hover {
     background: linear-gradient(135deg, #ff8a9b, #98ded9);
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
 .services-section {
@@ -231,8 +306,8 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     position: relative;
-    min-height: 350px; /* زيادة الارتفاع الأدنى */
-    overflow: auto; /* لعرض النصوص الزائدة */
+    min-height: 350px;
+    overflow: auto;
 }
 
 .service-card:hover {
@@ -258,14 +333,14 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
     color: #555;
     line-height: 1.6;
     margin-bottom: 15px;
-    word-wrap: break-word; /* كسر الكلمات الطويلة */
-    max-height: 120px; /* تحديد ارتفاع أقصى للنص */
-    overflow: hidden; /* إخفاء النص الزائد إذا لزم */
+    word-wrap: break-word;
+    max-height: 120px;
+    overflow: hidden;
 }
 
 .service-image {
     width: 100%;
-    height: 150px; /* تقليل الارتفاع لإعطاء مساحة للنص */
+    height: 150px;
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 15px;
@@ -444,21 +519,76 @@ nav .menu-toggle input[type="checkbox"]:checked ~ ul {
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-
-@media (max-width: 768px) {
-    .hero-content h1 { font-size: 24px; }
-    .hero-content p { font-size: 12px; }
-    nav ul { flex-direction: column; gap: 10px; }
-    .services-section h2 { font-size: 24px; }
-    .hero-content { padding: 20px; }
-    .footer .grid { grid-template-columns: 1fr; text-align: center; }
-    .Social-Media { justify-content: center; }
+/* Hamburger - مخفي افتراضياً */
+.hamburger {
+    display: none !important;   /* ← أضف !important لو لسه باين */
+    font-size: 28px;
+    color: #ff6b81;
+    cursor: pointer;
+    padding: 10px;
 }
 
-@media (max-width: 480px) {
-    .hero-content h1 { font-size: 18px; }
-    .hero-content p { font-size: 10px; }
-    .services-section h2 { font-size: 18px; }
-    .service-card { padding: 10px; min-height: 300px; }
-    .service-image { height: 120px; }
+/* يظهر فقط على الموبايل */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block !important;
+    }
+    
+    nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #fcdcec, #ffb6c1);
+        padding: 25px 20px;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        flex-direction: column;
+        text-align: center;
+        gap: 18px;
+    }
+    
+    nav .menu-toggle input[type="checkbox"]:checked ~ ul {
+        display: flex !important;
+    }
+}
+/* زرار تسجيل الخروج – شكل نهائي موحد وأنيق جدًا */
+#logout-item {
+    margin-left: auto; /* يدفع الزرار لليمين لو عايز */
+}
+
+#logout-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffccd5 0%, #ff8a9b 100%);
+    color: #ffffff !important;
+    padding: 10px 24px;
+    border-radius: 999px; /* كبسولة كاملة ناعمة */
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(255, 107, 129, 0.35);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 145px;
+    border: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#logout-link:hover {
+    background: linear-gradient(135deg, #ff8a9b 0%, #ff6b81 100%);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 25px rgba(255, 107, 129, 0.5);
+    color: #ffffff !important;
+}
+
+/* على الموبايل يصغر شوية */
+@media (max-width: 768px) {
+    #logout-link {
+        padding: 9px 20px;
+        font-size: 13.5px;
+        min-width: 130px;
+    }
 }

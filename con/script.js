@@ -60,84 +60,103 @@ const translations = {
     }
 };
 
-// تغيير اللغة
-function changeLanguage() {
-    const lang = document.getElementById('languageSelect').value;
-    document.getElementById('htmlLang').setAttribute('lang', lang);
-    document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-    document.getElementById('formLanguage').value = lang;
-
-    document.getElementById('name').placeholder = lang === 'ar' ? 'أدخل اسمك' : 'Enter your name';
-    document.getElementById('email').placeholder = lang === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email';
-    document.getElementById('phone').placeholder = lang === 'ar' ? 'أدخل رقم هاتفك' : 'Enter your phone number';
-    document.getElementById('message').placeholder = lang === 'ar' ? 'اكتب رسالتك هنا' : 'Write your message here';
-
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.textContent = translations[lang][key];
-    });
-
-    localStorage.setItem('language', lang);
-    updateNavbar();
-    populateUserData();
-}
-
-// ==================== 2. تحديث الناف بار (Navbar) ====================
+// ==================== 3. تغيير اللغة ====================
 function updateNavbar() {
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    const userEmail = userData.contact_info || userData.email;
-    const userName = userData.name;
+    const isLoggedIn = !!(userData.contact_info || userData.email || userData.id);
 
-    const loginLink = document.getElementById('login-link') || document.getElementById('login-signup-link');
-    const logoutLink = document.getElementById('logout-link');
-    const userNameDisplay = document.getElementById('user-name-display');
-    const userNameText = document.getElementById('user-name-text');
+    // جلب العناصر بأمان (لو مش موجودة → null)
+    const loginItem     = document.getElementById('login-item') || document.getElementById('login-signup-link');
+    const logoutItem    = document.getElementById('logout-item');
+    const userDisplay   = document.getElementById('user-name-display');
+    const userName      = document.getElementById('user-name-text');
+    const userAvatar    = document.getElementById('user-avatar-img');
 
-    if (userEmail) {
-        if (loginLink) loginLink.style.display = 'none';
-        if (logoutLink) logoutLink.style.display = 'block';
-        if (userNameDisplay) {
-            userNameDisplay.style.display = 'inline-flex';
-            if (userNameText) userNameText.textContent = userName || "مستخدم";
+    if (isLoggedIn) {
+        // مسجل دخول → إخفاء تسجيل الدخول، إظهار الكبسولة + الخروج
+        if (loginItem)      loginItem.style.display = 'none';
+        if (logoutItem)     logoutItem.style.display = 'block';
+        if (userDisplay)    userDisplay.style.display = 'inline-flex'; // أو 'flex' لو عايز
+        if (userName)       userName.textContent = userData.name || 'مستخدم';
+        if (userAvatar) {
+            userAvatar.src = userData.image_url || userData.profile_pic || '/img/default-avatar.png';
+            userAvatar.alt = userData.name || 'صورة المستخدم';
         }
     } else {
-        if (loginLink) loginLink.style.display = 'block';
-        if (logoutLink) logoutLink.style.display = 'none';
-        if (userNameDisplay) userNameDisplay.style.display = 'none';
+        // زائر → إظهار تسجيل الدخول، إخفاء الباقي
+        if (loginItem)      loginItem.style.display = 'block';
+        if (logoutItem)     logoutItem.style.display = 'none';
+        if (userDisplay)    userDisplay.style.display = 'none';
+        if (userAvatar)     userAvatar.src = '/img/default-avatar.png';
     }
 }
 
-// ==================== 3. تغيير اللغة ====================
+// ────────────────────────────────────────────────
+// ضبط صورة الـ avatar + معالجة الخطأ (يشتغل بعد تحميل الصفحة)
+function setupAvatarFallback() {
+    const avatarImg = document.getElementById('user-avatar-img');
+    if (!avatarImg) return;
+
+    // ضبط الصورة الأولية من localStorage (إذا كان مسجل دخول)
+    const user = JSON.parse(localStorage.getItem('userData') || '{}');
+    if (user && (user.image_url || user.profile_pic)) {
+        avatarImg.src = user.image_url || user.profile_pic;
+    } else {
+        avatarImg.src = "/img/default-avatar.png";
+    }
+
+    // fallback لو الصورة ما اتحملتش (404 أو خطأ شبكة)
+    avatarImg.onerror = () => {
+        avatarImg.src = "/img/default-avatar.png";
+        avatarImg.onerror = null; // نمنع loop لا نهائي
+    };
+}
+
+// ────────────────────────────────────────────────
+// استدعاء واحد مركزي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. تحديث النافبار فوراً
+    updateNavbar();
+
+    // 2. ضبط صورة الـ avatar + معالجة الأخطاء
+    setupAvatarFallback();
+
+    // 3. (اختياري) إعادة تحديث النافبار كل ما يتغير localStorage
+    // مفيد لو فيه تبويبات متعددة
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'userData') {
+            updateNavbar();
+            setupAvatarFallback();
+        }
+    });
+});
 function changeLanguage() {
     const langSelect = document.getElementById('languageSelect');
     if (!langSelect) return;
-    const lang = langSelect.value;
-
-    document.getElementById('htmlLang').setAttribute('lang', lang);
-    document.getElementById('htmlLang').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
     
-    const formLangInput = document.getElementById('formLanguage');
-    if (formLangInput) formLangInput.value = lang;
-
-    // تحديث الـ Placeholders
-    document.getElementById('name').placeholder = lang === 'ar' ? 'أدخل اسمك' : 'Enter your name';
-    document.getElementById('email').placeholder = lang === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email';
-    document.getElementById('phone').placeholder = lang === 'ar' ? 'أدخل رقم هاتفك' : 'Enter your phone number';
-    document.getElementById('message').placeholder = lang === 'ar' ? 'اكتب رسالتك هنا' : 'Write your message here';
+    const lang = langSelect.value;
+    const htmlLang = document.getElementById('htmlLang');
+    if (htmlLang) {
+        htmlLang.setAttribute('lang', lang);
+        htmlLang.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    }
 
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        if (translations[lang][key]) element.textContent = translations[lang][key];
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
     });
 
     localStorage.setItem('language', lang);
-    updateNavbar();
+    updateNavbar(); // تحديث الناف بار بعد تغيير اللغة
     populateUserData();
 }
 
 function logout() {
-    localStorage.removeItem('userData');
-    window.location.href = '/log/login.html';
+    localStorage.removeItem('userData'); 
+    updateNavbar(); 
+    window.location.href = '/log/login.html'; 
 }
 
 // ==================== 4. تعبئة بيانات المستخدم المسجل تلقائياً ====================

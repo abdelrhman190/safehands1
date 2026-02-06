@@ -667,21 +667,44 @@ nav ul {
     align-items: center; /* يضمن أن الكبسولة وزر الخروج على خط واحد */
     gap: 15px;
 }
-
-/* تأكد أن زر الخروج يظهر بشكل واضح */
-#logout-item a {
-    color: #ff6b81 !important;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 5px 10px;
-    border: 1px solid #ffb6c1;
-    border-radius: 15px;
-    transition: 0.3s;
+/* زرار تسجيل الخروج – شكل نهائي موحد وأنيق جدًا */
+#logout-item {
+    margin-left: auto; /* يدفع الزرار لليمين لو عايز */
 }
 
-#logout-item a:hover {
-    background: #ff6b81;
-    color: white !important;
+#logout-link {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffccd5 0%, #ff8a9b 100%);
+    color: #ffffff !important;
+    padding: 10px 24px;
+    border-radius: 999px; /* كبسولة كاملة ناعمة */
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(255, 107, 129, 0.35);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 145px;
+    border: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#logout-link:hover {
+    background: linear-gradient(135deg, #ff8a9b 0%, #ff6b81 100%);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 25px rgba(255, 107, 129, 0.5);
+    color: #ffffff !important;
+}
+
+/* على الموبايل يصغر شوية */
+@media (max-width: 768px) {
+    #logout-link {
+        padding: 9px 20px;
+        font-size: 13.5px;
+        min-width: 130px;
+    }
 }
 @media (max-width: 768px) {
     /* 1. القائمة لازم تكون مخفية في البداية */

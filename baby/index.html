@@ -12,40 +12,51 @@
 <body>
 <header>
   <nav>
-    <div class="logo">
-      <img src="/images-1-removebg-preview.png" alt="Safe Hands Icon">
-      <span data-i18n="site_title">الأيدي الآمنة</span>
+    <div id="logo" class="logo">
+      <img src="../images-1-removebg-preview.png" alt="Safe Hands Icon">
+      <span data-i18n="site_title">Safe Hands</span>
     </div>
+
     <div class="language-selector">
       <select id="languageSelect" onchange="changeLanguage()">
         <option value="ar">🇪🇬 عربي</option>
         <option value="en">🇺🇸 English</option>
       </select>
     </div>
+
     <div class="menu-toggle">
       <input type="checkbox" id="menu-toggle">
-      <label for="menu-toggle">☰</label>
+      <label for="menu-toggle" class="hamburger">☰</label>
+
       <ul>
-        <li><a href="/index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
-        <li><a href="/services/index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
-        <li><a href="/about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
-        <li><a href="/con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
+        <li><a href="../index.html" class="nav-link" data-i18n="nav_home">الرئيسية</a></li>
+        <li><a href="index.html" class="nav-link" data-i18n="nav_services">الخدمات</a></li>
+        <li><a href="../about/index.html" class="nav-link" data-i18n="nav_about">من نحن</a></li>
+        <li><a href="../con/index.html" class="nav-link" data-i18n="nav_contact">تواصل معنا</a></li>
         <li><a href="/baby/index.html" class="nav-link" data-i18n="nav_find_babysitters">ابحث عن جليسات أطفال</a></li>
-        
-        <li id="dashboard-link" style="display: none;">
-        </li>
-        <li id="logout-link" style="display: none;">
-          <a href="#" class="nav-link" onclick="logout(); return false;" data-i18n="nav_logout">تسجيل الخروج</a>
-        </li>
-        <li id="login-signup-link">
-          <a href="/log/login.html" class="nav-link" data-i18n="nav_login_signup">تسجيل الدخول / إنشاء حساب</a>
-        </li>
-        <span id="user-name-display" class="user-name-display">
-          <a style="text-decoration: none; color: #4a4a4a;" href="/my_pro/profile.html">
-                            <i class="fas fa-user"></i>
-                        <span id="user-name-text"></span>
-                    </a>
-        </span>
+<!-- تسجيل الدخول (للزوار) -->
+<li id="login-item">
+    <a href="../log/login.html" id="login-link" class="nav-link" data-i18n="nav_login_signup">
+        تسجيل الدخول / إنشاء حساب
+    </a>
+</li>
+
+<!-- كبسولة الملف الشخصي (للمسجلين) -->
+<li id="user-name-display" style="display: none;">
+    <a href="/my_pro/profile.html" class="user-profile-capsule">
+        <div class="user-avatar-container">
+            <img id="user-avatar-img" src="/img/default-avatar.png" alt="User">
+        </div>
+        <span id="user-name-text"></span>
+    </a>
+</li>
+
+<!-- زرار تسجيل الخروج – الـ ID المهم هنا هو logout-item -->
+<li id="logout-item" style="display: none;">
+    <a href="#" id="logout-link" onclick="logout(); return false;" data-i18n="nav_logout">
+        تسجيل الخروج
+    </a>
+</li>
       </ul>
     </div>
   </nav>
